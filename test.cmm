@@ -1,17 +1,70 @@
-struct Point {
+int i;
+bool bo;
+
+struct a {
     int x;
     int y;
 };
 
-struct hello {
-    int x;
-    int y;
-    struct Point d;
-};
-
-void f(int a, int f) {
+struct b {
+    int z;
     int b;
-    int c;
-    struct hello h;
-    b = h.s.x;
+    struct a a1;
+};
+
+bool func(int a, int b, int c) {}
+
+void func1(int a, int b, int c) {}
+
+int func2(int d, int e, int f) {
+    int i;
+    bool bo;
+    int a;
+    int b;
+    struct a a1;
+    struct b b1;
+
+    a = a1.x;
+    a = a1.x + a1.y;
+    a = a1.x * a1.y;
+    b = !b1.z;
+    b = b1.a1.x - b1.b;
+    b = b1.a1.x / b1.b;
+
+    cout<<a;
+    cin>>a1.x;
+    cin>>b1.a1.x;
+
+    if (a > a1.y && b1.a1.x >= b1.a1.y) {
+	int a;
+	int b;
+	int a1;
+    }
+    
+    if (a > a1.y && b1.a1.x >= b1.a1.y) {
+	int a;
+	int b;
+	int a1;
+    
+	if (a1 < a || a1 <= b || a1 == a) {
+	       int a;
+	       int b;
+	}
+    } else {
+	int a1;
+	bool b1;
+	while (a1 > b1) {
+	    int a1;
+	    int b1;
+	}
+    }
+    
+    //Repeat (a == 0) { bool a1;}
+
+    return;
+    return bo;
+    return a1.x;
+
+    func(i, a, b);
+
 }

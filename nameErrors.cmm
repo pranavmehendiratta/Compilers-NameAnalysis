@@ -1,19 +1,21 @@
-int t;
-struct Point {
-    int x;
-    int y;
-};
-
-struct hello {
-    int x;
-    int y;
-    struct Point d;
-};
-
-void f(int a, int f) {
-    int b;
-    int c;
-    struct hello h;
-    b = h.x;
-    c = h.x + t;
-}
+// comment
+//
+//int t;
+//struct Point {
+//    int x;
+//    int y;
+//};
+//
+//struct hello {
+//    int x;
+//    int y;
+//    struct Point d;
+//};
+//
+//void f(int a, int f) {
+//    int b;
+//    int c;
+//    struct hello h;
+//    b = h.x;
+//    c = h.x + t;
+//}

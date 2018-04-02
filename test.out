@@ -1,0 +1,63 @@
+int i;
+bool bo;
+struct a{
+    int x;
+    int y;
+};
+
+struct b{
+    int z;
+    int b;
+    struct a a1;
+};
+
+bool func(int a, int b, int c) {
+}
+
+void func1(int a, int b, int c) {
+}
+
+int func2(int d, int e, int f) {
+    int i;
+    bool bo;
+    int a;
+    int b;
+    struct a a1;
+    struct b b1;
+    a(int) = a1(a).x(int);
+    a(int) = a1(a).x(int) + a1(a).y(int);
+    a(int) = a1(a).x(int) * a1(a).y(int);
+    b(int) = !b1(b).z(int);
+    b(int) = b1(b).a1(a).x(int) - b1(b).b(int);
+    b(int) = b1(b).a1(a).x(int) / b1(b).b(int);
+    cout << a(int);
+    cin >> a1(a).x(int);
+    cin >> b1(b).a1(a).x(int);
+    if (a(int) > a1(a).y(int) && b1(b).a1(a).x(int) >= b1(b).a1(a).y(int)) {
+        int a;
+        int b;
+        int a1;
+    }
+    if (a(int) > a1(a).y(int) && b1(b).a1(a).x(int) >= b1(b).a1(a).y(int)) {
+        int a;
+        int b;
+        int a1;
+        if (a1(int) < a(int) || a1(int) <= b(int) || a1(int) == a(int)) {
+            int a;
+            int b;
+        }
+    }
+    else {
+        int a1;
+        bool b1;
+        while (a1(int) > b1(bool)) {
+            int a1;
+            int b1;
+        }
+    }
+    return;
+    return bo(bool);
+    return a1(a).x(int);
+    func(int, int, int->bool)(i(int), a(int), b(int));
+}
+

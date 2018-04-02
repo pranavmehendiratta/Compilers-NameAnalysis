@@ -126,7 +126,7 @@ abstract class ASTnode {
     }
 
     public void checkSymbolTable(IdNode id, Sym sym, SymTable symTable) {
-	//System.out.println("--- Inside symbol table ---");
+	////System.out.println("--- Inside symbol table ---");
 
 
 	String idName = id.getIdName();
@@ -134,14 +134,14 @@ abstract class ASTnode {
 	    idName = "struct " + idName; 
 	}
 
-	//System.out.println("idName in checkSymbolTable: " + idName);
+	////System.out.println("idName in checkSymbolTable: " + idName);
 
 	try {
 	    symTable.addDecl(idName, sym);
 	    id.setValid(true);
-	    //System.out.println(sym.getType()); 
+	    ////System.out.println(sym.getType()); 
 	    //id.setIdNodeSym(sym);
-	    //System.out.println(id.getIdNodeSym().getType()); 
+	    ////System.out.println(id.getIdNodeSym().getType()); 
 	} catch (EmptySymTableException e) {
 	    id.error("Scope error in checkSymbolTable");
 	    id.setValid(false);
@@ -153,9 +153,9 @@ abstract class ASTnode {
 	    id.setValid(false);
 	}
 
-	symTable.print();
+	//symTable.print();
 
-	//System.out.println("--- Done symbol table ---");
+	////System.out.println("--- Done symbol table ---");
     }
 
 }
@@ -174,8 +174,8 @@ class ProgramNode extends ASTnode {
     public void nameAnalysis() {
 	myDeclList.nameAnalysis(symTable);
     
-	System.out.println("====== Final Symbol table =====");
-	symTable.print();
+	//System.out.println("====== Final Symbol table =====");
+	//symTable.print();
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -201,7 +201,7 @@ class DeclListNode extends ASTnode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("--- Inside name analysis DeclListNode ---");
+	//System.out.println("--- Inside name analysis DeclListNode ---");
         Iterator it = myDecls.iterator();
         try {
             while (it.hasNext()) {
@@ -210,7 +210,7 @@ class DeclListNode extends ASTnode {
         } catch (NoSuchElementException ex) {
             errorHandler("unexpected NoSuchElementException in DeclListNode.nameAnalysis");
         }
-	System.out.println("--- Done with DeclListNode ---\n");
+	//System.out.println("--- Done with DeclListNode ---\n");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -226,7 +226,7 @@ class DeclListNode extends ASTnode {
     }
 
     public HashMap<String, Sym> getVarDeclaration(SymTable symTable) {
-	System.out.println("\n--- Inside getVarDeclaration ---");
+	//System.out.println("\n--- Inside getVarDeclaration ---");
 
 	HashMap<String, Sym> map = new HashMap<String, Sym>();
         Iterator it = myDecls.iterator();
@@ -239,10 +239,10 @@ class DeclListNode extends ASTnode {
 	    
 	    // Checking if the current var declaration is valid
 	    
-	    System.out.println("Name analysis: ");
+	    //System.out.println("Name analysis: ");
 	    node.nameAnalysis(symTable);
 
-	    System.out.println("Getting the id\n");
+	    //System.out.println("Getting the id\n");
 	    
 	    
 	    if (node.getValid()) {
@@ -269,7 +269,7 @@ class DeclListNode extends ASTnode {
 	    }
 	}
 
-	symTable.print();
+	//symTable.print();
 
 	// Remove the new scope that was added
 	try {
@@ -278,7 +278,7 @@ class DeclListNode extends ASTnode {
 	    errorHandler("symtable empty in declListNode when called to add struct variables");
 	}
 	
-	System.out.println("--- Done with getVarDeclaration---\n");
+	//System.out.println("--- Done with getVarDeclaration---\n");
     
 	return map;
     }
@@ -294,7 +294,7 @@ class FormalsListNode extends ASTnode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("--- Inside name analysis FormalsListNode ---");
+	//System.out.println("--- Inside name analysis FormalsListNode ---");
 
 	// Functions have their own scope
 	symTable.addScope();
@@ -309,11 +309,11 @@ class FormalsListNode extends ASTnode {
             errorHandler("unexpected NoSuchElementException in FormalsListNode.nameAnalysis");
         }
     
-	System.out.println("--- Done with FormalsListNode ---");
+	//System.out.println("--- Done with FormalsListNode ---");
     }
 
     public List<String> getFormalsNamesList(SymTable symTable) {	
-	System.out.println("\n--- Inside getFormalsNamesList ---");
+	//System.out.println("\n--- Inside getFormalsNamesList ---");
 
 	// This list will saved in Sym object
 	List<String> formals = new ArrayList<String>();
@@ -328,9 +328,9 @@ class FormalsListNode extends ASTnode {
 	    errorHandler("unexpected NoSuchElementException in FormalsListNode.getFormalsNamesList");
 	}
 
-	System.out.println(Arrays.toString(formals.toArray()));
+	//System.out.println(Arrays.toString(formals.toArray()));
 
-	System.out.println("--- Done with getFormalsNamesList ---\n");
+	//System.out.println("--- Done with getFormalsNamesList ---\n");
 	return formals;
     }
 
@@ -356,10 +356,10 @@ class FnBodyNode extends ASTnode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("--- Inside name analysis FnBodyNode ---");
+	//System.out.println("--- Inside name analysis FnBodyNode ---");
 
-	System.out.println("=== Sym table at the start of fnbody ===");
-	symTable.print();
+	//System.out.println("=== Sym table at the start of fnbody ===");
+	//symTable.print();
 
 	
 	myDeclList.nameAnalysis(symTable);
@@ -371,7 +371,7 @@ class FnBodyNode extends ASTnode {
 	} catch (EmptySymTableException e) {
 	    errorHandler("SymTable empty in Function Body");
 	}
-	System.out.println("--- Done with FnBodyNode ---");
+	//System.out.println("--- Done with FnBodyNode ---");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -390,7 +390,7 @@ class StmtListNode extends ASTnode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("--- Inside name analysis StmtListNode ---");
+	//System.out.println("--- Inside name analysis StmtListNode ---");
         Iterator<StmtNode> it = myStmts.iterator();
 	try { 
 	    while (it.hasNext()) {
@@ -399,7 +399,7 @@ class StmtListNode extends ASTnode {
         } catch (NoSuchElementException ex) {
             errorHandler("unexpected NoSuchElementException in StmtListNode.nameAnalysis");
         }
-	System.out.println("--- Done with StmtListNode ---");
+	//System.out.println("--- Done with StmtListNode ---");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -419,7 +419,7 @@ class ExpListNode extends ASTnode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("--- Inside name analysis ExpListlNode ---");
+	//System.out.println("--- Inside name analysis ExpListlNode ---");
 	try {
 	    Iterator<ExpNode> it = myExps.iterator();
             while (it.hasNext()) {  // print the rest of the list
@@ -428,10 +428,11 @@ class ExpListNode extends ASTnode {
         } catch (NoSuchElementException ex) {
             errorHandler("unexpected NoSuchElementException in ExpListNode.nameAnalysis");
         }
-	System.out.println("--- Done with ExpListlNode ---");
+	//System.out.println("--- Done with ExpListlNode ---");
     }
 
     public void unparse(PrintWriter p, int indent) {
+        System.out.println("Inside ExpListNode unparse. indent: " + indent);
         Iterator<ExpNode> it = myExps.iterator();
         if (it.hasNext()) { // if there is at least one element
             it.next().unparse(p, indent);
@@ -453,7 +454,7 @@ class ExpListNode extends ASTnode {
 abstract class DeclNode extends ASTnode {
     
     public void nameAnalysis(SymTable symTable) {
-	//System.out.println("Inside name analysis DeclNode");
+	////System.out.println("Inside name analysis DeclNode");
     }
 
 }
@@ -466,7 +467,7 @@ class VarDeclNode extends DeclNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("\n--- Inside name analysis VarDeclNode ---");
+	//System.out.println("\n--- Inside name analysis VarDeclNode ---");
 	
 	Sym sym;
 	String declType = myType.getType();
@@ -494,7 +495,7 @@ class VarDeclNode extends DeclNode {
 	    // Adding struct to the name of symbol
 	    String structName = "struct " + struct.getIdName();
 	    
-	    System.out.println("structName: " + structName + ", struct.getIdNode(): " + struct.getIdName() );
+	    //System.out.println("structName: " + structName + ", struct.getIdNode(): " + struct.getIdName() );
 
 	    // Looking for the symbol
 	    Sym structSym = symTable.lookupGlobal(structName);
@@ -522,9 +523,9 @@ class VarDeclNode extends DeclNode {
 
 		valid = true;
 	
-		System.out.println("Struct of given type found");
-		System.out.println("myId: " +  myId.getIdName());
-		System.out.println("sym type: " + sym.getType());
+		//System.out.println("Struct of given type found");
+		//System.out.println("myId: " +  myId.getIdName());
+		//System.out.println("sym type: " + sym.getType());
 
 
 		// Add declaration in the symbol table
@@ -538,11 +539,11 @@ class VarDeclNode extends DeclNode {
 		    myId.error("Wrong argument in varDeclNode");
 		}
 		
-		symTable.print();
+		//symTable.print();
 
 	    }
 	}
-	System.out.println("--- Done with VarDeclNode ---");
+	//System.out.println("--- Done with VarDeclNode ---");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -591,7 +592,7 @@ class FnDeclNode extends DeclNode {
     }
     
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("\n--- Inside name analysis FnDeclNode ---");
+	//System.out.println("\n--- Inside name analysis FnDeclNode ---");
 	
 	// Process the formals and Check if this id already 
 	// exists either as variable or function
@@ -606,13 +607,13 @@ class FnDeclNode extends DeclNode {
 	// If there is a sumbol with same id	    
     	if (oldSym != null) {
 	    if (oldSym.isFunctionType()) {
-		System.out.println("Same name function found in table");
+		//System.out.println("Same name function found in table");
 		myFormalsList.nameAnalysis(symTable);
 		myId.setProcFormals(true);
 	    } else {
 		// The symbol is a variable
 		// Continue processing with function body
-		System.out.println("Same name variable found in table");
+		//System.out.println("Same name variable found in table");
 		symTable.addScope();
 		myId.setProcFormals(false);
 	    }	    
@@ -638,9 +639,9 @@ class FnDeclNode extends DeclNode {
 	}
 
 	myBody.nameAnalysis(symTable);
-	symTable.print();
+	//symTable.print();
 
-	System.out.println("--- Done with FnDeclNode ---\n");
+	//System.out.println("--- Done with FnDeclNode ---\n");
     }
 
 
@@ -670,7 +671,7 @@ class FormalDeclNode extends DeclNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("--- Inside name analysis FormalDeclNode ---");
+	//System.out.println("--- Inside name analysis FormalDeclNode ---");
 	
 	Sym sym;     
 	if(myType.getType().equals("void")){
@@ -681,7 +682,7 @@ class FormalDeclNode extends DeclNode {
 	    checkSymbolTable(myId, sym, symTable);
 	}
 	
-	System.out.println("--- Done with FormalDeclNode ---");
+	//System.out.println("--- Done with FormalDeclNode ---");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -711,7 +712,7 @@ class StructDeclNode extends DeclNode {
 
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("\n---Inside name analysis StructDeclNode---");
+	//System.out.println("\n---Inside name analysis StructDeclNode---");
 	
 	//String structName = "struct " + myId.getIdName();
 	
@@ -724,16 +725,16 @@ class StructDeclNode extends DeclNode {
 	sym.setStructScopeVariables(myDeclList.getVarDeclaration(symTable));
 
 	// Checking if correct variables stored in struct sym scope
-	System.out.println("Scope variables for struct");
-	System.out.println(Arrays.asList(sym.getStructScopeVariables()));	
+	//System.out.println("Scope variables for struct");
+	//System.out.println(Arrays.asList(sym.getStructScopeVariables()));	
 
 	myId.setIdNodeSym(sym);
 	checkSymbolTable(myId, sym, symTable);
 	
-	System.out.println("The current symbol table:");
-	symTable.print();
+	//System.out.println("The current symbol table:");
+	//symTable.print();
 	
-	System.out.println("---Done with structDeclNode---\n");
+	//System.out.println("---Done with structDeclNode---\n");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -829,7 +830,7 @@ class StructNode extends TypeNode {
 abstract class StmtNode extends ASTnode {
     
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("Inside name analysis StmtNode");
+	//System.out.println("Inside name analysis StmtNode");
     }
 
 }
@@ -939,7 +940,7 @@ class IfStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("Inside name analysis IfStmtNode");
+	//System.out.println("Inside name analysis IfStmtNode");
 	myExp.nameAnalysis(symTable);
 
 	//if has its own scope
@@ -984,7 +985,7 @@ class IfElseStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("Inside name analysis IfElseStmtNode");
+	//System.out.println("Inside name analysis IfElseStmtNode");
 	myExp.nameAnalysis(symTable);
 
 	//if has its own scope
@@ -1046,10 +1047,10 @@ class WhileStmtNode extends StmtNode {
     }
     
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("Inside name analysis WhileStmtNode");
+	//System.out.println("Inside name analysis WhileStmtNode");
 	myExp.nameAnalysis(symTable);
 
-	//Repeat has its own scope
+	//while has its own scope
 	symTable.addScope();
 
 	myDeclList.nameAnalysis(symTable);
@@ -1088,7 +1089,7 @@ class RepeatStmtNode extends StmtNode {
     }
 	
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("Inside name analysis RepeatStmtNode");
+	//System.out.println("Inside name analysis RepeatStmtNode");
 	myExp.nameAnalysis(symTable);
 
 	//Repeat has its own scope
@@ -1128,12 +1129,13 @@ class CallStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("Inside name analysis CallStmtNode");
+	//System.out.println("Inside name analysis CallStmtNode");
 	myCall.nameAnalysis(symTable);
     }
 
     public void unparse(PrintWriter p, int indent) {
-        doIndent(p, indent);
+        System.out.println("Inside CallStmtNode unparse");
+	doIndent(p, indent);
         myCall.unparse(p, indent);
         p.println(";");
     }
@@ -1148,8 +1150,10 @@ class ReturnStmtNode extends StmtNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("Inside name analysis ReturnStmtNode");
-	myExp.nameAnalysis(symTable);
+	//System.out.println("Inside name analysis ReturnStmtNode");
+	if (myExp != null) {
+	    myExp.nameAnalysis(symTable);
+	}
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -1173,7 +1177,7 @@ class ReturnStmtNode extends StmtNode {
 abstract class ExpNode extends ASTnode {
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("Inside name analysis ExpNode");
+	//System.out.println("Inside name analysis ExpNode");
     }
     
     public boolean isIdNode() {
@@ -1251,7 +1255,7 @@ class IdNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	//System.out.println("$$$$$$$$$ Inside name analysis Idnode\n");
+	////System.out.println("$$$$$$$$$ Inside name analysis Idnode\n");
 	mySym = symTable.lookupLocal(myStrVal);
 	if (mySym == null) {
 	    mySym = symTable.lookupGlobal(myStrVal);
@@ -1262,24 +1266,20 @@ class IdNode extends ExpNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
-        // Using Indent Value to print correctly
-	//if (indent == -1) {
-	//    System.out.println("### Inside IdNode unparse ###");
-	//    System.out.println("(" + mySym +")");
-	//}	
-	p.print(myStrVal);
+        // Using Indent Value to print the type correctly
 	if (indent == -1) {
+	    p.print(myStrVal);
 	    if (mySym != null) {
 		p.print("(" + mySym.getType() +")");
 	    }
 	} else if (indent == -2) {
+	    //p.print(myStrVal);
 	    if (mySym != null) {
 		p.print(mySym.getType());
 	    }
-	} 
-	//else {
-	//    p.print(myStrVal);
-	//}
+	} else {
+	    p.print(myStrVal);
+	}
     }
 
     public String getIdName() {
@@ -1350,21 +1350,21 @@ class DotAccessExpNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	System.out.println("--- Inside name analysis Dot Access node ---\n");
+	//System.out.println("--- Inside name analysis Dot Access node ---\n");
 	
 	Sym sym = Loc(symTable, myLoc, myId);
 	
 	if (sym != null) {
-	    System.out.println("Sym: " + sym.getType());
+	    //System.out.println("Sym: " + sym.getType());
 	    myId.setIdNodeSym(sym);
 	}
 
-	System.out.println("--- Done with Dot Access node ---\n");
+	//System.out.println("--- Done with Dot Access node ---\n");
     }
 
     public Sym Loc(SymTable symTable, ExpNode loc, IdNode id) {
 
-	System.out.println("myLoc: " + myLoc.isIdNode() + " myId: " + myId.isIdNode());
+	//System.out.println("myLoc: " + myLoc.isIdNode() + " myId: " + myId.isIdNode());
     
 	if (!loc.isIdNode()) {
 	    // We need to go to next level
@@ -1424,7 +1424,7 @@ class DotAccessExpNode extends ExpNode {
 
 
     public void unparse(PrintWriter p, int indent) {
-	//System.out.println("### Inside dotaccess node ###");
+	////System.out.println("### Inside dotaccess node ###");
 	//p.print("(");
         myLoc.unparse(p, -1);
         //p.print(").");
@@ -1482,6 +1482,7 @@ class CallExpNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
+        System.out.println("Inside CallExpNode unparse");
 	type = symTable.lookupGlobal(myId.getIdName());
 
 	if (type == null) {
