@@ -1,24 +1,40 @@
-int i;
-bool bo;
+struct i { 
+    int x;
+    int y;
+};
+
+bool B;
 
 struct a {
     int x;
     int y;
 };
 
+int function() {} 
+
 struct b {
-    int i;
+    
+    
+    int i; // Variable inside the struct with the same name as int variable
+	    // Outside the scope of struct
     int z;
-    int b;
+    int b; // Variable inside struct with same name as struct
     struct a a1;
 };
+    
 
-bool func(int a, int b, int c) {}
+bool func(int a, int b, int c) {
+}
 
-void func1(int a, int b, int c) {}
+int func1;
+
+bool xyz () {}
+
+struct b final;
 
 bool func3 () {
     int func3;
+    final.z++;
 }
 
 int func2(int d, int e, int f) {
@@ -44,35 +60,45 @@ int func2(int d, int e, int f) {
 	int a;
 	int b;
 	int a1;
+	final.a1.x++;
     }
+    
     
     if (a > a1.y && b1.a1.x >= b1.a1.y) {
 	int a;
 	int b;
 	int a1;
-    
+	struct a a2;
+	a2.x++;
+	final.a1.x++;
+	
 	if (a1 < a || a1 <= b || a1 == a) {
-	       int a;
-	       int b;
+	    int a;
+	    int b;
 	}
     } else {
 	int a1;
+	int b; 
 	bool b1;
+	final.a1.x++;
+	
 	while (a1 > b1) {
 	    int a1;
 	    int b1;
+	    final.a1.x++;
 	}
     }
     
     repeat (a1 > b1) {
-	    int a1;
-	    int b1;
+	int a1;
+	int b1;
+	final.a1.x++;
     }
-
+    
     return;
     return bo;
     return a1.x;
-
+    
     func(i, a, b);
     func3();
 }
