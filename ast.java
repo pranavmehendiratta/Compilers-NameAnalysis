@@ -312,28 +312,6 @@ class FormalsListNode extends ASTnode {
 	//System.out.println("--- Done with FormalsListNode ---");
     }
 
-    public List<String> getFormalsNamesList(SymTable symTable) {	
-	//System.out.println("\n--- Inside getFormalsNamesList ---");
-
-	// This list will saved in Sym object
-	List<String> formals = new ArrayList<String>();
-	Iterator<FormalDeclNode> it = myFormals.iterator();
-	try {
-	    while (it.hasNext()) {
-		FormalDeclNode node = it.next();
-		String type = node.getType().getType();
-		formals.add(type);
-	    }
-	} catch (NoSuchElementException ex) {
-	    errorHandler("unexpected NoSuchElementException in FormalsListNode.getFormalsNamesList");
-	}
-
-	//System.out.println(Arrays.toString(formals.toArray()));
-
-	//System.out.println("--- Done with getFormalsNamesList ---\n");
-	return formals;
-    }
-
     public void unparse(PrintWriter p, int indent) {
         Iterator<FormalDeclNode> it = myFormals.iterator();
         if (it.hasNext()) { // if there is at least one element
@@ -596,15 +574,11 @@ class FnDeclNode extends DeclNode {
 	
 	// Process the formals and Check if this id already 
 	// exists either as variable or function
-
-	List<String> formals = myFormalsList.getFormalsNamesList(symTable); 
 	Sym newFuncSym = new Sym(myType.getType());
 	newFuncSym.setFunctionType(true);
-	newFuncSym.setFuncParamsList(formals);
-	
 	Sym oldSym = symTable.lookupLocal(myId.getIdName()); 
 
-	// If there is a sumbol with same id	    
+	// If there is a symbol with same id	    
     	if (oldSym != null) {
 	    if (oldSym.isFunctionType()) {
 		//System.out.println("Same name function found in table");
