@@ -1,21 +1,156 @@
-// comment
-//
-//int t;
-//struct Point {
-//    int x;
-//    int y;
-//};
-//
-//struct hello {
-//    int x;
-//    int y;
-//    struct Point d;
-//};
-//
-//void f(int a, int f) {
-//    int b;
-//    int c;
-//    struct hello h;
-//    b = h.x;
-//    c = h.x + t;
-//}
+struct i { 
+    int x;
+    int y;
+};
+
+int i; // Integer with same name as struct won't be added to symbol table
+
+bool B;
+
+struct B { // Struct with same name as integer won't be declared
+    int B;
+};
+
+struct a {
+    int x;
+    int y;
+};
+
+int function() {} 
+
+struct b {
+    
+    struct B wrong; // This will give invalid name of struct type error
+    
+    int i; // Variable inside the struct with the same name as int variable
+	    // Outside the scope of struct
+    int z;
+    int b; // Variable inside struct with same name as struct
+    int i; // Multiply declared
+    struct a a1;
+};
+    
+void d; // Non-Function declared void
+
+bool func(int a, int b, int c) {
+    a = B.x; // Dot-access of non-struct type
+    b = X; // Use of undeclared identifier
+}
+
+int func1;
+
+void func1(int a, int b, int c) {} // Can't declare this function
+
+bool xyz () {}
+
+int xyz; // Can't declare this
+
+struct b final;
+
+bool func3 () {
+    int func3;
+    void h; // Non-function declared void
+    func3 = A.x; // Undeclared Id
+    final.z++;
+    final.a1.z--; // Invalid struct field name
+}
+
+int func2(int d, int e, int f) {
+    int i;
+    bool bo;
+    int a;
+    int b;
+    struct a a1;
+    struct b b1;
+
+    d = a1.z; // Invalid struct field name
+
+    a = a1.x;
+    a = a1.x + a1.y;
+    a = a1.x * a1.y;
+    b = !b1.z;
+    b = b1.a1.x - b1.b;
+    b = b1.a1.x / b1.b;
+
+    cout<<a;
+    cin>>a1.x;
+    cin>>b1.a1.x;
+
+    if (a > a1.y && b1.a1.x >= b1.a1.y) {
+	int a;
+	int b;
+	int b; // Multiply declared
+	int a1;
+	void h; // non-function declared void
+	struct B wrong; // This will give invalid name of struct type error
+	a = B.x; // Dot-access of non-struct type
+	final.a1.x++;
+	final.a1.z--; // Invalid struct field name
+	
+    }
+    
+    
+    if (a > a1.y && b1.a1.x >= b1.a1.y) {
+	int a;
+	int b;
+	int b; // Multiply declared
+	int a1;
+	struct a a2;
+	struct B wrong; // This will give invalid name of struct type error
+	b = a2.z; // Invalid struct field name
+	p++; // Undeclared
+	a2.x++;
+	a = B.x; // Dot-access of non-struct type
+	final.a1.x++;
+	final.a1.z--; // Invalid struct field name
+	
+	if (a1 < a || a1 <= b || a1 == a) {
+	    int a;
+	    int b;
+	    a = B.x; // Dot-access of non-struct type
+	}
+    } else {
+	int a1;
+	int b; 
+	int b; // Multiply declared
+	bool b1;
+	void h; // non-function declared void
+	struct B wrong; // This will give invalid name of struct type error
+	b = B.x; // Dot-access of non-struct type
+	final.a1.x++;
+	final.a1.z--; // Invalid struct field name
+	
+	while (a1 > b1) {
+	    int a1;
+	    int b1;
+	    void h; // non-function declared void
+	    struct B wrong; // This will give invalid name of struct type error
+	    p++; // Undeclared
+	    B.x--; // Dot-access of non-struct type
+	    final.a1.x++;
+	    final.a1.z--; // Invalid struct field name
+	}
+    }
+    
+    repeat (a1 > b1) {
+	int a1;
+	int b1;
+	int b; // Multiply declared
+	int b; // Multiply declared
+	void h; // non-function declared void
+	struct B wrong; // This will give invalid name of struct type error
+	p++; // Undeclared
+	B.x--; // Dot-access of non-struct type
+	final.a1.x++;
+	final.a1.z--; // Invalid struct field name
+    }
+    
+    return;
+    return bo;
+    return a1.x;
+    
+    l(); // Calling a function that does not exists
+    
+    func(i, a, b);
+    func3();
+}

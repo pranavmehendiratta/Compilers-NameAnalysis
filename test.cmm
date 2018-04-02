@@ -7,6 +7,7 @@ struct a {
 };
 
 struct b {
+    int i;
     int z;
     int b;
     struct a a1;
@@ -15,6 +16,10 @@ struct b {
 bool func(int a, int b, int c) {}
 
 void func1(int a, int b, int c) {}
+
+bool func3 () {
+    int func3;
+}
 
 int func2(int d, int e, int f) {
     int i;
@@ -59,12 +64,15 @@ int func2(int d, int e, int f) {
 	}
     }
     
-    //Repeat (a == 0) { bool a1;}
+    repeat (a1 > b1) {
+	    int a1;
+	    int b1;
+    }
 
     return;
     return bo;
     return a1.x;
 
     func(i, a, b);
-
+    func3();
 }

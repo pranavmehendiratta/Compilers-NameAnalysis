@@ -55,14 +55,15 @@ public class P4 {
         }
 
 	// ADD NAME ANALYSIS PART HERE
-        System.out.println("\n-----Starting Name Analysis\n");
+        //System.out.println("\n-----Starting Name Analysis\n");
 	((ProgramNode)root.value).nameAnalysis();
 	if (((ProgramNode)root.value).getNameAnalysisStatus()) {
 	    // Name Analysis successful. Unparsing the input.
 	    ((ASTnode)root.value).unparse(outFile, 0);
+	    System.out.println("program name analyzed correctly\n");
 	} else {
 	    // Name Analysis unsuccessful. throwing error.
-	    System.err.println("\n---name analysis unsuccessful\n");
+	    System.out.println("program name analysis unsuccessful\n");
 	}
 	
         outFile.close();

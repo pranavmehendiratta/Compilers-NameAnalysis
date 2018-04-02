@@ -125,7 +125,7 @@ abstract class ASTnode {
 	ErrMsg.setNameAnalysisStatus(false);
     }
 
-    public void checkSymbolTable(IdNode id, Sym sym, SymTable symTable) {
+    public void addSymbol(IdNode id, Sym sym, SymTable symTable) {
 	////System.out.println("--- Inside symbol table ---");
 
 
@@ -134,7 +134,7 @@ abstract class ASTnode {
 	    idName = "struct " + idName; 
 	}
 
-	////System.out.println("idName in checkSymbolTable: " + idName);
+	//System.out.println("idName in addSymbol: " + idName);
 
 	try {
 	    symTable.addDecl(idName, sym);
@@ -143,13 +143,13 @@ abstract class ASTnode {
 	    //id.setIdNodeSym(sym);
 	    ////System.out.println(id.getIdNodeSym().getType()); 
 	} catch (EmptySymTableException e) {
-	    id.error("Scope error in checkSymbolTable");
+	    id.error("Scope error in addSymbol");
 	    id.setValid(false);
 	} catch (DuplicateSymException e) {
 	    id.error("Multiply declared identifier");
 	    id.setValid(false);
 	} catch (WrongArgumentException e) {
-	    id.error("Wrong argument in checkSymbolTable");
+	    id.error("Wrong argument in addSymbol");
 	    id.setValid(false);
 	}
 
@@ -176,6 +176,12 @@ class ProgramNode extends ASTnode {
     
 	//System.out.println("====== Final Symbol table =====");
 	//symTable.print();
+	//
+	//Sym sym = symTable.lookupLocal("struct b");
+	//if (sym != null) {
+	//    System.out.println(sym.getStructScopeVariables());
+	//}
+    
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -264,9 +270,9 @@ class DeclListNode extends ASTnode {
 		// in current scope
 		map.put(id.getIdName(), sym);
 		id.setIdNodeSym(sym);
-	    } else {
-		errorHandler("Error: Name analysis on VarDeclNode in structBody was unsuccessful");
-	    }
+	    } //else {
+		//errorHandler("Error: Name analysis on VarDeclNode in structBody was unsuccessful");
+	    //}
 	}
 
 	//symTable.print();
@@ -410,7 +416,7 @@ class ExpListNode extends ASTnode {
     }
 
     public void unparse(PrintWriter p, int indent) {
-        System.out.println("Inside ExpListNode unparse. indent: " + indent);
+        //System.out.println("Inside ExpListNode unparse. indent: " + indent);
         Iterator<ExpNode> it = myExps.iterator();
         if (it.hasNext()) { // if there is at least one element
             it.next().unparse(p, indent);
@@ -450,14 +456,24 @@ class VarDeclNode extends DeclNode {
 	Sym sym;
 	String declType = myType.getType();
 
+	//symTable.print();
+
 	// Valid declarations
 	if (declType.equals("int") || declType.equals("bool")) {
 	    
 	    sym = new Sym(declType);
-	    myId.setIdNodeSym(sym); 
-	    checkSymbolTable(myId, sym, symTable);
-	    valid = myId.getValid();
+	    
+	    //System.out.println("Symbol to create is of int/bool");
 
+	    Sym oldSym = symTable.lookupLocal("struct " + myId.getIdName());
+	    if (oldSym != null) {
+		//System.out.println("Struct of type " + myId.getIdName() + " already declared");
+		myId.error("Multiply declared identifier");
+	    } else {
+		myId.setIdNodeSym(sym); 
+		addSymbol(myId, sym, symTable);
+		valid = myId.getValid();
+	    }	    
 	} else if (declType.equals("void")) {
 	    // Id of void type
 	    
@@ -600,11 +616,11 @@ class FnDeclNode extends DeclNode {
 	    try {
 		symTable.addDecl(myId.getIdName(), newFuncSym);
 	    } catch (EmptySymTableException e) {
-		errorHandler("Scope error in checkSymbolTable");
+		errorHandler("Scope error in addSymbol");
 	    } catch (DuplicateSymException e) {
 		errorHandler("Multiply declared identifier");
 	    } catch (WrongArgumentException e) {
-		errorHandler("Wrong argument in checkSymbolTable");
+		errorHandler("Wrong argument in addSymbol");
 	    }
 	    
 	    
@@ -653,7 +669,7 @@ class FormalDeclNode extends DeclNode {
 	} else {
 	    sym = new Sym(myType.getType());
 	    myId.setIdNodeSym(sym);
-	    checkSymbolTable(myId, sym, symTable);
+	    addSymbol(myId, sym, symTable);
 	}
 	
 	//System.out.println("--- Done with FormalDeclNode ---");
@@ -688,27 +704,33 @@ class StructDeclNode extends DeclNode {
     public void nameAnalysis(SymTable symTable) {
 	//System.out.println("\n---Inside name analysis StructDeclNode---");
 	
-	//String structName = "struct " + myId.getIdName();
-	
-	// Id should be of type struct
+	// Creating a new symbol
 	Sym sym = new Sym("struct");
-
 	sym.setStructType(true);
 
-	// TODO: Update the hashmap of this struct
-	sym.setStructScopeVariables(myDeclList.getVarDeclaration(symTable));
+	// Checking if the symbol with myId exists already
+	Sym oldSym = symTable.lookupLocal(myId.getIdName());
+	if (oldSym != null) {
+	    myId.error("Multiply declared identifier");
+	    //System.out.println("Symbol with id: " + myId.getIdName() + " already present");
+	} else {
+	    //System.out.println("Symbol with id: " + myId.getIdName() + " not present");
+	    // TODO: Update the hashmap of this struct
+	    sym.setStructScopeVariables(myDeclList.getVarDeclaration(symTable));
 
-	// Checking if correct variables stored in struct sym scope
-	//System.out.println("Scope variables for struct");
-	//System.out.println(Arrays.asList(sym.getStructScopeVariables()));	
+	    // Checking if correct variables stored in struct sym scope
+	    //System.out.println("Scope variables for struct");
+	    //System.out.println(Arrays.asList(sym.getStructScopeVariables()));	
 
-	myId.setIdNodeSym(sym);
-	checkSymbolTable(myId, sym, symTable);
+	    myId.setIdNodeSym(sym);
+	    addSymbol(myId, sym, symTable);
+
+	    //System.out.println("The current symbol table:");
+	    //symTable.print();
 	
-	//System.out.println("The current symbol table:");
+	    //System.out.println("---Done with structDeclNode---\n");
+	}
 	//symTable.print();
-	
-	//System.out.println("---Done with structDeclNode---\n");
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -1108,7 +1130,7 @@ class CallStmtNode extends StmtNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
-        System.out.println("Inside CallStmtNode unparse");
+        //System.out.println("Inside CallStmtNode unparse");
 	doIndent(p, indent);
         myCall.unparse(p, indent);
         p.println(";");
@@ -1229,7 +1251,7 @@ class IdNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-	////System.out.println("$$$$$$$$$ Inside name analysis Idnode\n");
+	////System.out.println("##### Inside name analysis Idnode\n");
 	mySym = symTable.lookupLocal(myStrVal);
 	if (mySym == null) {
 	    mySym = symTable.lookupGlobal(myStrVal);
@@ -1456,7 +1478,7 @@ class CallExpNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable symTable) {
-        System.out.println("Inside CallExpNode unparse");
+        //System.out.println("Inside CallExpNode unparse");
 	type = symTable.lookupGlobal(myId.getIdName());
 
 	if (type == null) {
